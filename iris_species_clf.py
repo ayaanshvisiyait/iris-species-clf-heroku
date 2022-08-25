@@ -11,15 +11,15 @@ from sklearn.ensemble import RandomForestClassifier
 # Loading the dataset.
 iris_df = pd.read_csv("iris-species.csv")
 
-# Adding a column in the Iris DataFrame to resemble the non-numeric 'Species' column as numeric using the 'map()' function.
-# Creating the numeric target column 'Label' to 'iris_df' using the 'map()' function.
+# Adding column 
+
 iris_df['Label'] = iris_df['Species'].map({'Iris-setosa': 0, 'Iris-virginica': 1, 'Iris-versicolor':2})
 
-# Creating features and target DataFrames.
+# Creating features and target 
 X = iris_df[['SepalLengthCm','SepalWidthCm', 'PetalLengthCm', 'PetalWidthCm']]
 y = iris_df['Label']
 
-# Splitting the dataset into train and test sets.
+# Splitting 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.33, random_state = 42)
 
 # Creating an SVC model. 
@@ -47,24 +47,17 @@ def prediction(model, sepal_length, sepal_width, petal_length, petal_width):
 
 
 
-# Add title widget
+# title widget
 st.sidebar.title("Iris Species Prediction App")      
 
-# Add 4 sliders and store the value returned by them in 4 separate variables. 
+# sliders 
 s_len = st.sidebar.slider("Sepal Length", float(iris_df["SepalLengthCm"].min()), float(iris_df["SepalLengthCm"].max()))
-# The 'float()' function converts the 'numpy.float' values to Python float values.
 s_wid = st.sidebar.slider("Sepal Width", float(iris_df["SepalWidthCm"].min()), float(iris_df["SepalWidthCm"].max()))
 p_len = st.sidebar.slider("Petal Length", float(iris_df["PetalLengthCm"].min()), float(iris_df["PetalLengthCm"].max()))
 p_wid = st.sidebar.slider("Petal Width", float(iris_df["PetalWidthCm"].min()), float(iris_df["PetalWidthCm"].max()))
 
-# Add a select box in the sidebar with the 'Classifier' label.
-# Also pass 3 options as a tuple ('Support Vector Machine', 'Logistic Regression', 'Random Forest Classifier').
-# Store the current value of this slider in the 'classifier' variable.
 classifier = st.sidebar.selectbox('Classifier', ('Support Vector Machine', 'Logistic Regression', 'Random Forest Classifier'))
 
-# When the 'Predict' button is clicked, check which classifier is chosen and call the 'prediction()' function.
-# Store the predicted value in the 'species_type' variable accuracy score of the model in the 'score' variable. 
-# Print the values of 'species_type' and 'score' variables using the 'st.text()' function.
 if st.sidebar.button("Predict"):
   if classifier == 'Support Vector Machine':
     species_type = prediction(svc_model, s_len, s_wid, p_len, p_wid)
